@@ -104,11 +104,8 @@ type Message struct {
 }
 
 func String2CsvCell(title string) string {
-	title = strings.Trim(title, " \t\n,")
+	title = strings.TrimSpace(title)
 	title = strings.Replace(title, "Tytuł: ", "", 1)
-	if strings.Contains(title, ",") {
-		title = "\"" + strings.Replace(title, "\"", "\"\"", -1) + "\""
-	}
 	return title
 }
 
