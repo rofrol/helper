@@ -3,11 +3,8 @@ package helper
 import (
 	"code.google.com/p/go.net/html"
 	//"reflect"
-	"log"
 	"sort"
-	"strconv"
 	"strings"
-	"time"
 )
 
 func FindByClass(n *html.Node, nType string, w string) *html.Node {
@@ -94,41 +91,8 @@ func concat(old1 []*html.Node, old2 []*html.Node) []*html.Node {
 	return newslice
 }
 
-// getters setters http://stackoverflow.com/questions/11810218/how-to-set-and-get-fields-in-golang-structs
-type Message struct {
-	Title   string
-	TOrd    time.Time
-	TExe    time.Time
-	Balance float64
-	Saldo   float64
-}
-
 func String2CsvCell(title string) string {
 	title = strings.TrimSpace(title)
 	title = strings.Replace(title, "Tytuł: ", "", 1)
 	return title
-}
-
-func String2Message(arr []*html.Node) Message {
-	// https://sites.google.com/site/gopatterns/error-handling
-	var err error
-	title := String2CsvCell(arr[2].FirstChild.FirstChild.Data)
-	tOrd, err := time.Parse("02.01.2006", arr[3].FirstChild.Data)
-	if err != nil {
-		log.Fatal(err)
-	}
-	tExe, err := time.Parse("02.01.2006", arr[4].FirstChild.Data)
-	if err != nil {
-		log.Fatal(err)
-	}
-	balance, err := strconv.ParseFloat(strings.Replace(arr[5].FirstChild.Data, " ", "", -1), 64)
-	if err != nil {
-		log.Fatal(err)
-	}
-	saldo, err := strconv.ParseFloat(strings.Replace(arr[6].FirstChild.Data, " ", "", -1), 64)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return Message{title, tOrd, tExe, balance, saldo}
 }
